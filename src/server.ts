@@ -40,4 +40,4 @@ app
     port: Number(PORT),
     host: "0.0.0.0"
   })
-  .then(() => console.log(`API Running on port ${PORT}`))
+  .then(() => console.log(`API Running on port ${PORT}`));
