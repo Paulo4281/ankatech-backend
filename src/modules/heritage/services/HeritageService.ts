@@ -8,10 +8,6 @@ export class HeritageService {
   async save(): Promise<any> {
     const prisma = new PrismaClient()
 
-    await prisma.user.create({
-      data: {
-        name: "John Doe"
-      }
-    })
+    return
   }
 }

@@ -16,6 +16,34 @@ model User {
   @@map("tb_user")
 }
 
+model Allocation {
+  id String @id @default(uuid()) @map("id_allocation")
+  title String @map("title_allocation")
+  dateStart DateTime? @map("datestart_allocation")
+  installments Int? @map("installments_allocation")
+  interestRate Float? @map("interestrate_allocation")
+  entryValue Int? @map("entryvalue_allocation")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  registers AllocationRegister[]
+
+  @@map("tb_allocation")
+}
+
+model AllocationRegister {
+  id String @id @default(uuid()) @map("id_allocationregister")
+  date DateTime @map("date_allocationregister")
+  value Int @map("value_allocationregister")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @map("created_at")
+
+  allocationId String @map("id_allocation")
+  allocation Allocation @relation(fields: [allocationId], references: [id])
+
+  @@map("tb_allocationregister")
+}
+
 model Heritage {
   id String @id @default(uuid()) @map("id_heritage")
   value Int @map("value_heritage")
