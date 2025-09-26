@@ -1,15 +1,23 @@
 import Fastify from "fastify"
+import cors from "@fastify/cors"
 import "reflect-metadata"
+import "./utils/container"
 import { HeritageRoutes } from "./routes/heritage.routes"
 import { AllocationRoutes } from "./routes/allocation.routes"
-import swagger from "@fastify/swagger";
-import swaggerUI from "@fastify/swagger-ui";
+import swagger from "@fastify/swagger"
+import swaggerUI from "@fastify/swagger-ui"
+import "./database/postgres"
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod"
 
 const app = Fastify()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.register(cors, {
+  origin: "http://localhost:3000",
+  credentials: true
+})
 
 async function loadSwagger() {
   await app.register(swagger, {

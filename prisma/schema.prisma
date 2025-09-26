@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -19,6 +18,7 @@ model User {
 model Allocation {
   id String @id @default(uuid()) @map("id_allocation")
   title String @map("title_allocation")
+  value Int @map("value_allocation")
   dateStart DateTime? @map("datestart_allocation")
   installments Int? @map("installments_allocation")
   interestRate Float? @map("interestrate_allocation")
@@ -27,21 +27,44 @@ model Allocation {
   createdAt DateTime @default(now()) @map("created_at")
 
   registers AllocationRegister[]
+  types AllocationTypeMap[]
 
   @@map("tb_allocation")
 }
 
+model AllocationType {
+  id String @id @default(uuid()) @map("id_allocationtype")
+  name String @map("name_allocationtype")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  allocations AllocationTypeMap[]
+
+  @@map("tb_allocationtype")
+}
+
+model AllocationTypeMap {
+  id String @id @default(uuid()) @map("id_allocationtypemap")
+  allocationId String @map("id_allocation")
+  allocationTypeId String @map("id_allocationtype")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  allocation Allocation @relation(fields: [allocationId], references: [id])
+  allocationType AllocationType @relation(fields: [allocationTypeId], references: [id])
+
+  @@map("tb_allocationtypemap")
+}
+
 model AllocationRegister {
-  id String @id @default(uuid()) @map("id_allocationregister")
-  date DateTime @map("date_allocationregister")
-  value Int @map("value_allocationregister")
+  id String @id @default(uuid()) @map("id_allocationregistry")
+  date DateTime @map("date_allocationregistry")
+  value Int @map("value_allocationregistry")
   updatedAt DateTime? @map("updated_at")
   createdAt DateTime @map("created_at")
 
   allocationId String @map("id_allocation")
   allocation Allocation @relation(fields: [allocationId], references: [id])
 
-  @@map("tb_allocationregister")
+  @@map("tb_allocationregistry")
 }
 
 model Heritage {
