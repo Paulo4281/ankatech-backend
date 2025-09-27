@@ -25,7 +25,8 @@ export class AllocationRegistryRepository implements IAllocationRegistryReposito
             },
             data: {
                 date: new Date(DateUtils.formatDate(params.date, "YYYY-MM-DD")),
-                value: ValueUtils.currencyToCentsInt(params.value)
+                value: ValueUtils.currencyToCentsInt(params.value),
+                updatedAt: new Date()
             }
         })
     }

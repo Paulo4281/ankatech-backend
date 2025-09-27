@@ -9,7 +9,7 @@ const AllocationTypes = [
     },
     {
         value: "f8248cb3-0cb2-43ca-bd59-f803de603d1c",
-        label: "Financeira"
+        label: "Financiada"
     },
     {
         value: "983b8fee-1957-47a4-8785-8d4e1819137d",
@@ -32,7 +32,7 @@ const AllocationSchemaRequest = z.object({
     interestRate: z.string().optional(),
     entryValue: z.string().optional()
 }).superRefine((data, ctx) => {
-    if (data.types.includes("75679762-aaf6-4393-8113-03a9309f0add")) {
+    if (data.types.includes("f8248cb3-0cb2-43ca-bd59-f803de603d1c")) {
         if (!data.dateEnd) {
         ctx.addIssue({ path: ["startDate"], code: "custom", message: "Campo 'startDate' é obrigatório" })
         }

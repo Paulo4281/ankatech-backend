@@ -9,6 +9,10 @@ export class AllocationService {
         private allocationRepository: IAllocationRepository
     ) {}
 
+    async save(params: TAllocationCreateDTO): Promise<void> {
+        await this.allocationRepository.save(params)
+    }
+
     async find(params: TAllocationFindParamsDTO): Promise<TAllocationResponseDTO[]> {
         const parsedAllocationTypes = params.allocationTypeId[0]?.split(",")
 
@@ -17,15 +21,11 @@ export class AllocationService {
         }) as TAllocationResponseDTO[]
 
         allocations.forEach((allocation) => {
-            if (allocation.registries?.length) {
+            if (!allocation.types.some((type) => type.allocationType.id === "f8248cb3-0cb2-43ca-bd59-f803de603d1c") && allocation.registries?.length) {
                 allocation.value += allocation.registries.reduce((total, registry) => total += registry.value, 0)
             }
         })
 
         return allocations
-    }
-
-    async save(params: TAllocationCreateDTO): Promise<void> {
-        await this.allocationRepository.save(params)
     }
 }

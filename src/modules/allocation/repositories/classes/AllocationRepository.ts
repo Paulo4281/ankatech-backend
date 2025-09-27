@@ -17,7 +17,7 @@ export class AllocationRepository implements IAllocationRepository {
                 dateEnd: params.dateEnd ? new Date(DateUtils.formatDate(params.dateEnd, "YYYY-MM-DD")) : null,
                 installments: Number(params.installments || 0),
                 interestRate: Number(params.interestRate || 0),
-                entryValue: Number(params.entryValue || 0),
+                entryValue: params.entryValue ? ValueUtils.currencyToCentsInt(params.entryValue) : null,
                 types: {
                     create: params.types.map((typeId: string) => ({
                         allocationType: { connect: { id: typeId } }
@@ -49,6 +49,17 @@ export class AllocationRepository implements IAllocationRepository {
                         date: "desc"
                     }
                 }
+            }
+        })
+    }
+
+    async updateUpdatedAt(id: string): Promise<void> {
+        await this.repository.update({
+            where: {
+                id
+            },
+            data: {
+                updatedAt: new Date()
             }
         })
     }
