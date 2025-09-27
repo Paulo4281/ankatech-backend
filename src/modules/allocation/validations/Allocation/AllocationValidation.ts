@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { AllocationTypeMapSchema } from "./AllocationTypeMapValidation"
+import { AllocationRegistrySchemaResponse } from "../AllocationRegistry/AllocationRegistryValidation"
 
 const AllocationTypes = [
     {
@@ -24,14 +25,15 @@ const AllocationSchemaRequest = z.object({
     ).nonempty({ error: "Campo 'types' é obrigatório" }),
     title: z.string().min(1, { error: "Campo 'title' é obrigatório" }),
     value: z.string().min(1, { error: "Campo 'value' é obrigatório" }),
+    dateStart: z.string().min(1, { error: "Campo 'startDate' é obrigatório" }),
     
-    dateStart: z.string().optional(),
+    dateEnd: z.string().optional(),
     installments: z.string().optional(),
     interestRate: z.string().optional(),
     entryValue: z.string().optional()
 }).superRefine((data, ctx) => {
     if (data.types.includes("75679762-aaf6-4393-8113-03a9309f0add")) {
-        if (!data.dateStart) {
+        if (!data.dateEnd) {
         ctx.addIssue({ path: ["startDate"], code: "custom", message: "Campo 'startDate' é obrigatório" })
         }
         if (!data.installments) {
@@ -50,13 +52,15 @@ const AllocationSchemaResponse = z.object({
     id: z.string(),
     title: z.string(),
     value: z.number(),
-    dateStart: z.date().optional().nullable(),
-    installments: z.number().optional().nullable(),
-    interestRate: z.number().optional().nullable(),
-    entryValue: z.number().optional().nullable(),
-    updatedAt: z.date().optional().nullable(),
+    dateStart: z.date(),
+    dateEnd: z.date().nullable(),
+    installments: z.number().nullable(),
+    interestRate: z.number().nullable(),
+    entryValue: z.number().nullable(),
+    updatedAt: z.date().nullable(),
     createdAt: z.date(),
-    types: z.array(AllocationTypeMapSchema)
+    types: z.array(AllocationTypeMapSchema),
+    registries: z.array(AllocationRegistrySchemaResponse)
 })
 
 const AllocationSchemaFindQuery = z.object({

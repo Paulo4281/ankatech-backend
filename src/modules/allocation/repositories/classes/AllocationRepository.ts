@@ -14,9 +14,10 @@ export class AllocationRepository implements IAllocationRepository {
                 title: params.title,
                 value: ValueUtils.currencyToCentsInt(params.value),
                 dateStart: new Date(DateUtils.formatDate(params.dateStart, "YYYY-MM-DD")),
-                installments: Number(params.installments),
-                interestRate: Number(params.interestRate),
-                entryValue: Number(params.entryValue),
+                dateEnd: params.dateEnd ? new Date(DateUtils.formatDate(params.dateEnd, "YYYY-MM-DD")) : null,
+                installments: Number(params.installments || 0),
+                interestRate: Number(params.interestRate || 0),
+                entryValue: Number(params.entryValue || 0),
                 types: {
                     create: params.types.map((typeId: string) => ({
                         allocationType: { connect: { id: typeId } }
@@ -41,6 +42,11 @@ export class AllocationRepository implements IAllocationRepository {
                 types: {
                     include: {
                         allocationType: true
+                    }
+                },
+                registries: {
+                    orderBy: {
+                        date: "desc"
                     }
                 }
             }

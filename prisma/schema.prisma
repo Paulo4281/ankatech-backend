@@ -19,14 +19,15 @@ model Allocation {
   id String @id @default(uuid()) @map("id_allocation")
   title String @map("title_allocation")
   value Int @map("value_allocation")
-  dateStart DateTime? @map("datestart_allocation")
+  dateStart DateTime @map("datestart_allocation")
+  dateEnd DateTime? @map("dateend_allocation")
   installments Int? @map("installments_allocation")
   interestRate Float? @map("interestrate_allocation")
   entryValue Int? @map("entryvalue_allocation")
   updatedAt DateTime? @map("updated_at")
   createdAt DateTime @default(now()) @map("created_at")
 
-  registers AllocationRegister[]
+  registries AllocationRegistry[]
   types AllocationTypeMap[]
 
   @@map("tb_allocation")
@@ -54,23 +55,15 @@ model AllocationTypeMap {
   @@map("tb_allocationtypemap")
 }
 
-model AllocationRegister {
+model AllocationRegistry {
   id String @id @default(uuid()) @map("id_allocationregistry")
   date DateTime @map("date_allocationregistry")
   value Int @map("value_allocationregistry")
   updatedAt DateTime? @map("updated_at")
-  createdAt DateTime @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   allocationId String @map("id_allocation")
   allocation Allocation @relation(fields: [allocationId], references: [id])
 
   @@map("tb_allocationregistry")
-}
-
-model Heritage {
-  id String @id @default(uuid()) @map("id_heritage")
-  value Int @map("value_heritage")
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("tb_heritage")
 }

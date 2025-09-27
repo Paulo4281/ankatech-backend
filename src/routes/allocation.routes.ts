@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify"
 import { z } from "zod"
-import { AllocationSchemaRequest, AllocationSchemaResponse, AllocationSchemaFindQuery } from "../modules/allocation/validations/AllocationValidation"
+import { AllocationSchemaRequest, AllocationSchemaResponse, AllocationSchemaFindQuery } from "../modules/allocation/validations/Allocation/AllocationValidation"
 import { AllocationController } from "../modules/allocation/controllers/AllocationController"
 
 const allocationController = new AllocationController()
@@ -35,4 +35,6 @@ function AllocationRoutes(app: FastifyInstance) {
   )
 }
 
-export { AllocationRoutes }
+export {
+  AllocationRoutes
+}
