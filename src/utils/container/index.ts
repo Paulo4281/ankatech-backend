@@ -3,6 +3,8 @@ import { AllocationRepository } from "../../modules/allocation/repositories/clas
 import { IAllocationRepository } from "../../modules/allocation/repositories/interfaces/IAllocationRepository"
 import { AllocationRegistryRepository } from "../../modules/allocation/repositories/classes/AllocationRegistryRepository"
 import { IAllocationRegistryRepository } from "../../modules/allocation/repositories/interfaces/IAllocationRegistryRepository"
+import { FamilyMemberRepository } from "../../modules/familyMember/repositories/classes/FamilyMemberRepository"
+import { IFamilyMemberRepository } from "../../modules/familyMember/repositories/interfaces/IFamilyMemberRepository"
 
 container.registerSingleton<IAllocationRepository>(
     "AllocationRepository",
@@ -12,4 +14,9 @@ container.registerSingleton<IAllocationRepository>(
 container.registerSingleton<IAllocationRegistryRepository>(
     "AllocationRegistryRepository",
     delay(() => AllocationRegistryRepository)
+)
+
+container.registerSingleton<IFamilyMemberRepository>(
+    "FamilyMemberRepository",
+    delay(() => FamilyMemberRepository)
 )

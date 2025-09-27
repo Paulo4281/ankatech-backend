@@ -17,7 +17,8 @@ export class AllocationService {
         const parsedAllocationTypes = params.allocationTypeId[0]?.split(",")
 
         const allocations = await this.allocationRepository.find({
-            allocationTypeId: parsedAllocationTypes
+            allocationTypeId: parsedAllocationTypes,
+            familyMemberId: params.familyMemberId
         }) as TAllocationResponseDTO[]
 
         allocations.forEach((allocation) => {

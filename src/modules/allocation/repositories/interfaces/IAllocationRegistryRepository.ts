@@ -1,4 +1,3 @@
-import { AllocationRegistry } from "@prisma/client"
 import type { TAllocationRegistryCreateDTO, TAllocationRegistryUpdateDTO } from "../../dtos/AllocationRegistryDTO"
 
 interface IAllocationRegistryRepository {

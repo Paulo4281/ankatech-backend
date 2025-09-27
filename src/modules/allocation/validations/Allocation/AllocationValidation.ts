@@ -26,6 +26,7 @@ const AllocationSchemaRequest = z.object({
     title: z.string().min(1, { error: "Campo 'title' é obrigatório" }),
     value: z.string().min(1, { error: "Campo 'value' é obrigatório" }),
     dateStart: z.string().min(1, { error: "Campo 'startDate' é obrigatório" }),
+    familyMemberId: z.string().min(1, { error: "Campo 'familyMemberId' é obrigatório" }),
     
     dateEnd: z.string().optional(),
     installments: z.string().optional(),
@@ -57,6 +58,7 @@ const AllocationSchemaResponse = z.object({
     installments: z.number().nullable(),
     interestRate: z.number().nullable(),
     entryValue: z.number().nullable(),
+    familyMemberId: z.string(),
     updatedAt: z.date().nullable(),
     createdAt: z.date(),
     types: z.array(AllocationTypeMapSchema),
@@ -64,6 +66,7 @@ const AllocationSchemaResponse = z.object({
 })
 
 const AllocationSchemaFindQuery = z.object({
+    familyMemberId: z.string(),
     allocationTypeId: z.preprocess(
         (val) => (typeof val === 'string' ? [val] : val),
         z.array(z.string()).nonempty({ error: "Campo 'allocationTypeId' é obrigatório" })
