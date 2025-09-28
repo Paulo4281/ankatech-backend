@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify"
 import { container } from "tsyringe"
 import { MovementService } from "../services/MovementService"
-import { TMovementCreateDTO, TMovementFindParamsDTO } from "../dtos/MovementDTO"
+import type { TMovementCreateDTO, TMovementFindParamsDTO } from "../dtos/MovementDTO"
 
 export class MovementController {
     async save(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {

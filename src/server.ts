@@ -10,6 +10,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "fast
 import { AllocationRegistryRoutes } from "./routes/allocationregistry.routes"
 import { FamilyMemberRoutes } from "./routes/familymember.routes"
 import { MovementRoutes } from "./routes/movement.routes"
+import { InsuranceRoutes } from "./routes/insurrance.routes"
 
 const app = Fastify()
 
@@ -45,6 +46,7 @@ app.register(AllocationRoutes, { prefix: "/allocation" })
 app.register(AllocationRegistryRoutes, { prefix: "/allocation-registry" })
 app.register(FamilyMemberRoutes, { prefix: "/family-member" })
 app.register(MovementRoutes, { prefix: "/movement" })
+app.register(InsuranceRoutes, { prefix: "/insurance" })
 
 const PORT = process.env.PORT || 8080
 

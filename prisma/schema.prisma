@@ -29,6 +29,11 @@ enum MovementClass {
   fixed
 }
 
+enum InsuranceType {
+  life
+  disability
+}
+
 model User {
   id String @id @default(uuid()) @map("id_user")
   name String @map("name_user")
@@ -56,6 +61,7 @@ model FamilyMember {
   family Family @relation(fields: [familyId], references: [id])
   allocations Allocation[]
   movements Movement[]
+  insurances Insurance[]
 
   @@map("tb_familymember")
 }
@@ -132,4 +138,20 @@ model Movement {
   familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
 
   @@map("tb_movement")
+}
+
+model Insurance {
+  id String @id @default(uuid()) @map("id_insurance")
+  type InsuranceType @map("type_insurance")
+  title String @map("title_insurance")
+  value Int @map("value_insurance")
+  dateStart DateTime @map("datestart_insurance")
+  duration Int @map("duration_insurance")
+  prize Int @map("prize_insurance")
+  familyMemberId String @map("id_familymember")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_insurance")
 }
