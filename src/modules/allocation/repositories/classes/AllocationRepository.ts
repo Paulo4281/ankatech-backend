@@ -6,7 +6,7 @@ import { DateUtils } from "../../../../utils/helpers/DateUtils/DateUtils"
 import { Allocation } from "@prisma/client"
 
 export class AllocationRepository implements IAllocationRepository {
-    private repository = prisma.allocation
+    private readonly repository = prisma.allocation
 
     async save(params: TAllocationCreateDTO): Promise<void> {
         await this.repository.create({

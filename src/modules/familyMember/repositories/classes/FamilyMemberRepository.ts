@@ -3,7 +3,7 @@ import { IFamilyMemberRepository } from "../interfaces/IFamilyMemberRepository"
 import { FamilyMember } from "@prisma/client"
 
 export class FamilyMemberRepository implements IFamilyMemberRepository {
-    private repository = prisma.familyMember
+    private readonly repository = prisma.familyMember
 
     async find(familyId: string): Promise<FamilyMember[]> {
         return this.repository.findMany({

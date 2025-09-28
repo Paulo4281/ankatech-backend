@@ -9,6 +9,7 @@ import "./database/postgres"
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod"
 import { AllocationRegistryRoutes } from "./routes/allocationregistry.routes"
 import { FamilyMemberRoutes } from "./routes/familymember.routes"
+import { MovementRoutes } from "./routes/movement.routes"
 
 const app = Fastify()
 
@@ -43,6 +44,7 @@ loadSwagger()
 app.register(AllocationRoutes, { prefix: "/allocation" })
 app.register(AllocationRegistryRoutes, { prefix: "/allocation-registry" })
 app.register(FamilyMemberRoutes, { prefix: "/family-member" })
+app.register(MovementRoutes, { prefix: "/movement" })
 
 const PORT = process.env.PORT || 8080
 

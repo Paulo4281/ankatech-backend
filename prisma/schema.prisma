@@ -7,6 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum MovementType {
+  earning
+  expense
+}
+
+enum MovementFrequency {
+  unique
+  monthly
+  yearly
+}
+
+enum MovementCategory {
+  credit
+  dependent
+  fixed
+}
+
+enum MovementClass {
+  financial
+  fixed
+}
+
 model User {
   id String @id @default(uuid()) @map("id_user")
   name String @map("name_user")
@@ -33,6 +55,7 @@ model FamilyMember {
   familyId String @map("id_family")
   family Family @relation(fields: [familyId], references: [id])
   allocations Allocation[]
+  movements Movement[]
 
   @@map("tb_familymember")
 }
@@ -91,4 +114,22 @@ model AllocationRegistry {
   allocation Allocation @relation(fields: [allocationId], references: [id])
 
   @@map("tb_allocationregistry")
+}
+
+model Movement {
+  id String @id @default(uuid()) @map("id_movement")
+  title String @map("title_movement")
+  value Int @map("value_movement")
+  dateStart DateTime @map("datestart_movement")
+  dateEnd DateTime? @map("dateend_movement")
+  type MovementType @map("type_movement")
+  class MovementClass @map("class_movement")
+  frequency MovementFrequency @map("frequency_movement")
+  category MovementCategory @map("category_movement")
+  familyMemberId String @map("id_familymember")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_movement")
 }

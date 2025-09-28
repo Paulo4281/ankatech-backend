@@ -5,7 +5,7 @@ import { DateUtils } from "../../../../utils/helpers/DateUtils/DateUtils"
 import { ValueUtils } from "../../../../utils/helpers/ValueUtils/ValueUtils"
 
 export class AllocationRegistryRepository implements IAllocationRegistryRepository {
-    private repository = prisma.allocationRegistry
+    private readonly repository = prisma.allocationRegistry
 
     async save(params: TAllocationRegistryCreateDTO): Promise<void> {
         await this.repository.create({
