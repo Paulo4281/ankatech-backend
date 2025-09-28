@@ -27,7 +27,7 @@ export class MovementRepository implements IMovementRepository {
     async find(params: TMovementFindParamsDTO): Promise<Movement[]> {
         return this.repository.findMany({
             where: {
-                class: params.class as MovementClass,
+                class: { in: params.class as MovementClass[] },
                 familyMemberId: params.familyMemberId
             }
         })

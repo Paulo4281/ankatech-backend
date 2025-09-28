@@ -1,13 +1,10 @@
 import { z } from "zod"
-import { MovementSchemaRequest, MovementSchemaResponse } from "../validations/MovementValidation"
+import { MovementSchemaRequest, MovementSchemaResponse, MovementSchemaFindQuery } from "../validations/MovementValidation"
 
 type TMovementCreateDTO = z.infer<typeof MovementSchemaRequest>
 type TMovementResponseDTO = z.infer<typeof MovementSchemaResponse>
 
-type TMovementFindParamsDTO = {
-    class: string
-    familyMemberId: string
-}
+type TMovementFindParamsDTO = z.infer<typeof MovementSchemaFindQuery>
 
 type MovementType = "earning" | "expense"
 type MovementClass = "financial" | "fixed"

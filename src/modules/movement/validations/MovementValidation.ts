@@ -29,7 +29,10 @@ const MovementSchemaResponse = z.object({
 
 const MovementSchemaFindQuery = z.object({
     familyMemberId: z.string(),
-    class: z.string()
+    class: z.preprocess(
+        (value) => (typeof value === "string" ? [value] : value),
+        z.array(z.string()).nonempty({ error: "Campo 'class' é obrigatório" })
+    )
 })
 
 export {

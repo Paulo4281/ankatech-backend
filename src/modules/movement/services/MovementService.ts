@@ -14,6 +14,11 @@ export class MovementService {
     }
 
     async find(params: TMovementFindParamsDTO): Promise<TMovementResponseDTO[]> {
-        return this.movementRepository.find(params)
+        const parsedMovementClasses = params.class[0]?.split(",")
+
+        return this.movementRepository.find({
+            class: parsedMovementClasses,
+            familyMemberId: params.familyMemberId
+        })
     }
 }
