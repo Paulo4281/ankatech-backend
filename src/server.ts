@@ -11,6 +11,7 @@ import { AllocationRegistryRoutes } from "./routes/allocationregistry.routes"
 import { FamilyMemberRoutes } from "./routes/familymember.routes"
 import { MovementRoutes } from "./routes/movement.routes"
 import { InsuranceRoutes } from "./routes/insurrance.routes"
+import { SimulationRoutes } from "./routes/simulation.routes"
 
 const app = Fastify()
 
@@ -47,6 +48,7 @@ app.register(AllocationRegistryRoutes, { prefix: "/allocation-registry" })
 app.register(FamilyMemberRoutes, { prefix: "/family-member" })
 app.register(MovementRoutes, { prefix: "/movement" })
 app.register(InsuranceRoutes, { prefix: "/insurance" })
+app.register(SimulationRoutes, { prefix: "/simulation" })
 
 const PORT = process.env.PORT || 8080
 

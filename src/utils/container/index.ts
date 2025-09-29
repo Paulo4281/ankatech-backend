@@ -9,6 +9,8 @@ import { MovementRepository } from "../../modules/movement/repositories/classes/
 import { IMovementRepository } from "../../modules/movement/repositories/interfaces/IMovementRepository"
 import { InsuranceRepository } from "../../modules/insurance/repositories/classes/InsuranceRepository"
 import { IInsuranceRepository } from "../../modules/insurance/repositories/interfaces/IInsuranceRepository"
+import { SimulationRepository } from "../../modules/simulation/repositories/classes/SimulationRepository"
+import { ISimulationRepository } from "../../modules/simulation/repositories/interfaces/ISimulationRepository"
 
 container.registerSingleton<IAllocationRepository>(
     "AllocationRepository",
@@ -33,4 +35,9 @@ container.registerSingleton<IMovementRepository>(
 container.registerSingleton<IInsuranceRepository>(
     "InsuranceRepository",
     delay(() => InsuranceRepository)
+)
+
+container.registerSingleton<ISimulationRepository>(
+    "SimulationRepository",
+    delay(() => SimulationRepository)
 )

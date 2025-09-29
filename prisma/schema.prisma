@@ -62,6 +62,7 @@ model FamilyMember {
   allocations Allocation[]
   movements Movement[]
   insurances Insurance[]
+  simulations Simulation[]
 
   @@map("tb_familymember")
 }
@@ -148,10 +149,26 @@ model Insurance {
   dateStart DateTime @map("datestart_insurance")
   duration Int @map("duration_insurance")
   prize Int @map("prize_insurance")
-  familyMemberId String @map("id_familymember")
   createdAt DateTime @default(now()) @map("created_at")
+
+  familyMemberId String @map("id_familymember")
 
   familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
 
   @@map("tb_insurance")
+}
+
+model Simulation {
+  id String @id @default(uuid()) @map("id_simulation")
+  name String @map("name_simulation")
+  dateStart DateTime @map("datestart_simulation")
+  rate Int @map("rate_simulation")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMemberId String @map("id_familymember")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_simulation")
 }
