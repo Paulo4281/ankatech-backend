@@ -31,7 +31,15 @@ const SimulationSchemaResponse = z.object({
     rate: z.number(),
     familyMemberId: z.string(),
     updatedAt: z.date().nullable(),
-    createdAt: z.date()
+    createdAt: z.date(),
+    chartInfo: z.record(
+        z.string(),
+        z.object({
+            original: z.number(),
+            current: z.number(),
+            done: z.number(),
+        })
+    ).optional()
 })
 
 const SimulationSchemaFindQuery = z.object({

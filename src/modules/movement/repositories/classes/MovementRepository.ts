@@ -25,11 +25,21 @@ export class MovementRepository implements IMovementRepository {
     }
 
     async find(params: TMovementFindParamsDTO): Promise<Movement[]> {
-        return this.repository.findMany({
-            where: {
-                class: { in: params.class as MovementClass[] },
-                familyMemberId: params.familyMemberId
+        const whereObj = {
+            class: {
+                in: params.class as MovementClass[]
+            },
+            familyMemberId: params.familyMemberId
+        }
+        
+        if (params.dateStart) {
+            whereObj["dateStart"] = {
+                gte: params.dateStart
             }
+        }
+
+        return this.repository.findMany({
+            where: whereObj
         })
     }
 }

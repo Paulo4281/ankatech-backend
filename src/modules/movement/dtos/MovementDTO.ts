@@ -4,7 +4,9 @@ import { MovementSchemaRequest, MovementSchemaResponse, MovementSchemaFindQuery 
 type TMovementCreateDTO = z.infer<typeof MovementSchemaRequest>
 type TMovementResponseDTO = z.infer<typeof MovementSchemaResponse>
 
-type TMovementFindParamsDTO = z.infer<typeof MovementSchemaFindQuery>
+type TMovementFindParamsDTO = z.infer<typeof MovementSchemaFindQuery> & {
+    dateStart?: Date
+}
 
 type MovementType = "earning" | "expense"
 type MovementClass = "financial" | "fixed"

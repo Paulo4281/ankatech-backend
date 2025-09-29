@@ -7,6 +7,10 @@ export class ValueUtils {
         return Math.round(formattedValue / 100)
     }
 
+    static getValueByPercentage(percent: number, total: number): number {
+        return (percent / 100) * total
+    }
+
     static centsIntToCurrency(value: number): string {
         return new Intl.NumberFormat("pt-BR", {
             style: "currency",

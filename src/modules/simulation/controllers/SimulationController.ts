@@ -13,7 +13,6 @@ export class SimulationController {
     async find(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {
         const service = container.resolve(SimulationService)
         const simulation = await service.find(request.query as TSimulationFindQuery)
-        console.log(simulation)
         return response.status(200).send(simulation)
     }
 
