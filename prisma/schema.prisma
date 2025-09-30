@@ -1,11 +1,38 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum MovementType {
+  earning
+  expense
+}
+
+enum MovementFrequency {
+  unique
+  monthly
+  yearly
+}
+
+enum MovementCategory {
+  credit
+  dependent
+  fixed
+}
+
+enum MovementClass {
+  financial
+  fixed
+}
+
+enum InsuranceType {
+  life
+  disability
 }
 
 model User {
@@ -16,10 +43,133 @@ model User {
   @@map("tb_user")
 }
 
-model Heritage {
-  id String @id @default(uuid()) @map("id_heritage")
-  value Int @map("value_heritage")
+model Family {
+  id String @id @default(uuid()) @map("id_family")
+  name String @map("name_family")
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@map("tb_heritage")
+  members FamilyMember[]
+
+  @@map("tb_family")
+}
+
+model FamilyMember {
+  id String @id @default(uuid()) @map("id_familymember")
+  name String @map("name_familymember")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyId String @map("id_family")
+  family Family @relation(fields: [familyId], references: [id])
+  allocations Allocation[]
+  movements Movement[]
+  insurances Insurance[]
+  simulations Simulation[]
+
+  @@map("tb_familymember")
+}
+
+model Allocation {
+  id String @id @default(uuid()) @map("id_allocation")
+  title String @map("title_allocation")
+  value Int @map("value_allocation")
+  dateStart DateTime @map("datestart_allocation")
+  dateEnd DateTime? @map("dateend_allocation")
+  installments Int? @map("installments_allocation")
+  interestRate Float? @map("interestrate_allocation")
+  entryValue Int? @map("entryvalue_allocation")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMemberId String @map("id_familymember")
+
+  registries AllocationRegistry[]
+  types AllocationTypeMap[]
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_allocation")
+}
+
+model AllocationType {
+  id String @id @default(uuid()) @map("id_allocationtype")
+  name String @map("name_allocationtype")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  allocations AllocationTypeMap[]
+
+  @@map("tb_allocationtype")
+}
+
+model AllocationTypeMap {
+  id String @id @default(uuid()) @map("id_allocationtypemap")
+  allocationId String @map("id_allocation")
+  allocationTypeId String @map("id_allocationtype")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  allocation Allocation @relation(fields: [allocationId], references: [id])
+  allocationType AllocationType @relation(fields: [allocationTypeId], references: [id])
+
+  @@map("tb_allocationtypemap")
+}
+
+model AllocationRegistry {
+  id String @id @default(uuid()) @map("id_allocationregistry")
+  date DateTime @map("date_allocationregistry")
+  value Int @map("value_allocationregistry")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  allocationId String @map("id_allocation")
+  allocation Allocation @relation(fields: [allocationId], references: [id])
+
+  @@map("tb_allocationregistry")
+}
+
+model Movement {
+  id String @id @default(uuid()) @map("id_movement")
+  title String @map("title_movement")
+  value Int @map("value_movement")
+  dateStart DateTime @map("datestart_movement")
+  dateEnd DateTime? @map("dateend_movement")
+  type MovementType @map("type_movement")
+  class MovementClass @map("class_movement")
+  frequency MovementFrequency @map("frequency_movement")
+  category MovementCategory @map("category_movement")
+  familyMemberId String @map("id_familymember")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_movement")
+}
+
+model Insurance {
+  id String @id @default(uuid()) @map("id_insurance")
+  type InsuranceType @map("type_insurance")
+  title String @map("title_insurance")
+  value Int @map("value_insurance")
+  dateStart DateTime @map("datestart_insurance")
+  duration Int @map("duration_insurance")
+  prize Int @map("prize_insurance")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMemberId String @map("id_familymember")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_insurance")
+}
+
+model Simulation {
+  id String @id @default(uuid()) @map("id_simulation")
+  name String @map("name_simulation")
+  dateStart DateTime @map("datestart_simulation")
+  rate Int @map("rate_simulation")
+  updatedAt DateTime? @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  familyMemberId String @map("id_familymember")
+
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  @@map("tb_simulation")
 }
