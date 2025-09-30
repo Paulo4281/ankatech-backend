@@ -23,7 +23,7 @@ export class SimulationService {
         return simulation
     }
 
-    async listHistory(params: TSimulationListHistoryFindQuery): Promise<any> {
+    async listHistory(params: TSimulationListHistoryFindQuery): Promise<TSimulationResponse[]> {
         const simulations = await this.simulationRepository.list({
             familyMemberId: params.familyMemberId,
         })
