@@ -39,11 +39,11 @@ const SimulationSchemaResponse = z.object({
             current: z.number(),
             done: z.number(),
         })
-    ).optional()
-})
+    ).nullable()
+}).nullable()
 
 const SimulationSchemaFindQuery = z.object({
-    id: z.string(),
+    id: z.string().nullable(),
     familyMemberId: z.string(),
     status: z.string()
 })

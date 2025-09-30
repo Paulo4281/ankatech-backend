@@ -21,8 +21,10 @@ export class SimulationRepository implements ISimulationRepository {
     async find(params: TSimulationFindQuery): Promise<Simulation> {
         return this.repository.findFirst({
             where: {
-                id: params.id,
-                familyMemberId: params.familyMemberId,
+                OR: [
+                    { id: params.id },
+                    { familyMemberId: params.familyMemberId }
+                ]
             },
             orderBy: {
                 createdAt: "desc"
@@ -51,6 +53,14 @@ export class SimulationRepository implements ISimulationRepository {
             },
             data: {
                 updatedAt: new Date()
+            }
+        })
+    }
+
+    async deleteById(id: string): Promise<void> {
+        await this.repository.delete({
+            where: {
+                id: id
             }
         })
     }

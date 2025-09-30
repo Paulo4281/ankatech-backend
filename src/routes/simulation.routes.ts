@@ -44,6 +44,15 @@ function SimulationRoutes(app: FastifyInstance) {
         },
         (request, response) => simulationController.update(request, response)
     )
+    app.delete(
+        "/:id",
+        {
+            schema: {
+                tags: ["Simulation"]
+            }
+        },
+        (request, response) => simulationController.deleteById(request, response)
+    )
 }
 
 export {

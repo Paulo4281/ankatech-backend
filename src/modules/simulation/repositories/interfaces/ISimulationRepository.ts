@@ -6,6 +6,7 @@ interface ISimulationRepository {
     find(params: TSimulationFindQuery): Promise<Simulation>
     update(params: TSimulationUpdateDTO): Promise<Simulation>
     updateUpdatedAt(id: string): Promise<void>
+    deleteById(id: string): Promise<void>
 }
 
 export type {

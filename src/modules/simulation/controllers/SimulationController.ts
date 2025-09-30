@@ -21,4 +21,11 @@ export class SimulationController {
         const simulation = await service.update(request.body as TSimulationUpdateDTO)
         return response.status(200).send(simulation)
     }
+
+    async deleteById(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {
+        const { id } = request.params as { id: string }
+        const service = container.resolve(SimulationService)
+        await service.deleteById(id)
+        return response.status(200).send()
+    }
 }

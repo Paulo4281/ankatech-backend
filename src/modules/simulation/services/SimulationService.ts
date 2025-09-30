@@ -15,7 +15,7 @@ export class SimulationService {
         private movementRepository: IMovementRepository
     ) {}
 
-    async save(params: TSimulationCreateDTO): Promise<Simulation> {
+    async save(params: TSimulationCreateDTO): Promise<TSimulationResponse> {
         if (!params.rate) {
             params.rate = 4
         }
@@ -24,8 +24,12 @@ export class SimulationService {
         return simulation
     }
 
-    async find(params: TSimulationFindQuery): Promise<TSimulationResponse> {
+    async find(params: TSimulationFindQuery): Promise<TSimulationResponse | null> {
         const simulationInfo = await this.simulationRepository.find(params)
+
+        if (!simulationInfo) {
+            return null
+        }
 
         const dateStart = simulationInfo.dateStart
         const rate = simulationInfo.rate
@@ -101,7 +105,7 @@ export class SimulationService {
     }
 
     async update(params: TSimulationUpdateDTO): Promise<TSimulationResponse> {
-        let simulation: Simulation
+        let simulation: TSimulationResponse
         if (!params.id) {
             simulation = await this.save({
                 name: params.name,
@@ -109,6 +113,7 @@ export class SimulationService {
                 rate: params.rate,
                 familyMemberId: params.familyMemberId
             })
+            simulation["chartInfo"] = null
         } else {
             simulation = await this.simulationRepository.update(params)
             await this.simulationRepository.updateUpdatedAt(params.id)
@@ -116,5 +121,9 @@ export class SimulationService {
 
 
         return simulation
+    }
+
+    async deleteById(id: string): Promise<void> {
+        await this.simulationRepository.deleteById(id)
     }
 }
