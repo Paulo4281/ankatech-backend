@@ -13,6 +13,6 @@ export class AllocationRegistryController {
     async update(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {
         const service = container.resolve(AllocationRegistryService)
         await service.update(request.body as TAllocationRegistryUpdateDTO)
-        return response.status(201).send()
+        return response.status(200).send()
     }
 }

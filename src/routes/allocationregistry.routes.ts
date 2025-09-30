@@ -1,5 +1,4 @@
 import { FastifyInstance } from "fastify"
-import { z } from "zod"
 import { AllocationRegistryController } from "../modules/allocation/controllers/AllocationRegistryController"
 import { AllocationRegistrySchemaRequest, AllocationRegistrySchemaUpdateRequest } from "../modules/allocation/validations/AllocationRegistry/AllocationRegistryValidation"
 

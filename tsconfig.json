@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/**/*"],
+  "include": ["**/**/**/*"],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
     "files": true

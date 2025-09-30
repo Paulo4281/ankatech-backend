@@ -1,5 +1,21 @@
-node_modules
-# Keep environment variables out of version control
-.env
+# Node
+node_modules/
+dist/
+*.log
+npm-debug.log*
 
+# Env variables
+.env
+.env.local
+.env.test
+
+# Prisma generated files
+/prisma/migrations/
+prisma/dev.db
 /src/generated/prisma
+
+# Coverage
+coverage/
+
+# Docker
+docker-compose.override.yml
