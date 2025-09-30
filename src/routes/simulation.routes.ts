@@ -1,5 +1,6 @@
+import { z } from "zod"
 import { FastifyInstance } from "fastify"
-import { SimulationSchemaFindQuery, SimulationSchemaRequest, SimulationSchemaResponse, SimulationSchemaUpdateRequest } from "../modules/simulation/validations/SimulationValidation"
+import { SimulationSchemaFindQuery, SimulationSchemaListHistoryFindQuery, SimulationSchemaRequest, SimulationSchemaListHistoryResponse, SimulationSchemaResponse, SimulationSchemaUpdateRequest } from "../modules/simulation/validations/SimulationValidation"
 import { SimulationController } from "../modules/simulation/controllers/SimulationController"
 
 const simulationController = new SimulationController()
@@ -17,6 +18,19 @@ function SimulationRoutes(app: FastifyInstance) {
             }
         },
         (request, response) => simulationController.save(request, response)
+    )
+    app.get(
+        "/list-history",
+        {
+            schema: {
+                tags: ["Simulation"],
+                queryString: SimulationSchemaListHistoryFindQuery,
+                response: {
+                    200: z.array(SimulationSchemaListHistoryResponse)
+                }
+            }
+        },
+        (request, response) => simulationController.listHistory(request, response)
     )
     app.get(
         "/",

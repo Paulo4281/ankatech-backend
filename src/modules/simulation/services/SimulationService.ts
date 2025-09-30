@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe"
-import type { TSimulationResponse, TSimulationUpdateDTO, TSimulationCreateDTO, TSimulationFindQuery } from "../dtos/SimulationDTO"
+import type { TSimulationResponse, TSimulationUpdateDTO, TSimulationCreateDTO, TSimulationFindQuery, TSimulationListHistoryFindQuery } from "../dtos/SimulationDTO"
 import { ISimulationRepository } from "../repositories/interfaces/ISimulationRepository"
-import { Simulation } from "@prisma/client"
 import { IMovementRepository } from "../../movement/repositories/interfaces/IMovementRepository"
 import { DateUtils } from "../../../utils/helpers/DateUtils/DateUtils"
 import { ValueUtils } from "../../../utils/helpers/ValueUtils/ValueUtils"
@@ -22,6 +21,14 @@ export class SimulationService {
 
         const simulation = await this.simulationRepository.save(params)
         return simulation
+    }
+
+    async listHistory(params: TSimulationListHistoryFindQuery): Promise<any> {
+        const simulations = await this.simulationRepository.list({
+            familyMemberId: params.familyMemberId,
+        })
+
+        return simulations
     }
 
     async find(params: TSimulationFindQuery): Promise<TSimulationResponse | null> {

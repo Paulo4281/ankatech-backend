@@ -24,6 +24,16 @@ const SimulationSchemaUpdateRequest = z.object({
     familyMemberId: z.string().min(1, { error: "Campo 'familyMemberId' é obrigatório" })
 })
 
+const SimulationSchemaListHistoryResponse = z.object({
+    id: z.string(),
+    name: z.string(),
+    dateStart: z.date(),
+    rate: z.number(),
+    familyMemberId: z.string(),
+    updatedAt: z.date().nullable(),
+    createdAt: z.date(),
+})
+
 const SimulationSchemaResponse = z.object({
     id: z.string(),
     name: z.string(),
@@ -39,18 +49,24 @@ const SimulationSchemaResponse = z.object({
             current: z.number(),
             done: z.number(),
         })
-    ).nullable()
+    ).nullable().optional()
 }).nullable()
 
+const SimulationSchemaListHistoryFindQuery = z.object({
+    familyMemberId: z.string()
+})
+
 const SimulationSchemaFindQuery = z.object({
-    id: z.string().nullable(),
     familyMemberId: z.string(),
-    status: z.string()
+    id: z.string().nullable(),
+    status: z.string().nullable()
 })
 
 export {
     SimulationSchemaFindQuery,
     SimulationSchemaRequest,
     SimulationSchemaResponse,
-    SimulationSchemaUpdateRequest
+    SimulationSchemaUpdateRequest,
+    SimulationSchemaListHistoryFindQuery,
+    SimulationSchemaListHistoryResponse
 }

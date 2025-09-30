@@ -1,13 +1,19 @@
 import { FastifyRequest, FastifyReply } from "fastify"
 import { container } from "tsyringe"
 import { SimulationService } from "../services/SimulationService"
-import type { TSimulationCreateDTO, TSimulationUpdateDTO, TSimulationFindQuery } from "../dtos/SimulationDTO"
+import type { TSimulationCreateDTO, TSimulationUpdateDTO, TSimulationFindQuery, TSimulationListHistoryFindQuery } from "../dtos/SimulationDTO"
 
 export class SimulationController {
     async save(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {
         const service = container.resolve(SimulationService)
         const simulation = await service.save(request.body as TSimulationCreateDTO)
         return response.status(201).send(simulation)
+    }
+
+    async listHistory(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {
+        const service = container.resolve(SimulationService)
+        const simulationsHistory = await service.listHistory(request.query as TSimulationListHistoryFindQuery)
+        return response.status(200).send(simulationsHistory)
     }
 
     async find(request: FastifyRequest, response: FastifyReply): Promise<FastifyReply> {

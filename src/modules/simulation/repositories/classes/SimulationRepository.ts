@@ -18,8 +18,33 @@ export class SimulationRepository implements ISimulationRepository {
         })
     }
 
+    async list(params: TSimulationFindQuery): Promise<Simulation[]> {
+        return this.repository.findMany({
+            where: {
+                familyMemberId: params.familyMemberId
+            },
+            orderBy: {
+                createdAt: "desc"
+            }
+        })
+    }
+
     async find(params: TSimulationFindQuery): Promise<Simulation> {
         return this.repository.findFirst({
+            where: {
+                AND: [
+                    { id: params.id },
+                    { familyMemberId: params.familyMemberId }
+                ]
+            },
+            orderBy: {
+                createdAt: "desc"
+            }
+        })
+    }
+
+    async findAll(params: TSimulationFindQuery): Promise<Simulation[]> {
+        return this.repository.findMany({
             where: {
                 OR: [
                     { id: params.id },
